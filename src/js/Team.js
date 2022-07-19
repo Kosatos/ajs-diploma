@@ -41,4 +41,74 @@ export default class Team {
     this.indexArray.push(index);
     return index;
   }
+
+  levelUp() {
+    this.indexArray = [];
+    GameState.currentLevel++;
+    this.team.forEach((char) => {
+      char.character.level++;
+      char.position = this.getIndex(1);
+
+      const attackAfter = +Math.max(
+        char.character.attack,
+        char.character.attack * (1.8 - char.character.health / 100)
+      ).toFixed(2);
+      char.character.attack = attackAfter;
+
+      char.character.health += 80;
+      if (char.character.health > 100) char.character.health = 100;
+
+      if (char.character.player === 'comp') {
+        this.team.splice(this.team.indexOf(char));
+        this.indexArray.splice(this.team.indexOf(char));
+      }
+    });
+    if (GameState.currentLevel === 2) {
+      const teamUser = generateTeam([Bowman, Swordsman, Magician], 1, 1);
+      teamUser.forEach((e) =>
+        this.team.push(new PositionedCharacter(e, this.getIndex(1)))
+      );
+
+      const teamComp = generateTeam(
+        [Daemon, Undead, Vampire],
+        2,
+        this.team.length
+      );
+      teamComp.forEach((e) =>
+        this.team.push(new PositionedCharacter(e, this.getIndex()))
+      );
+    }
+
+    if (GameState.currentLevel === 3) {
+      const teamUser = generateTeam([Bowman, Swordsman, Magician], 2, 2);
+      teamUser.forEach((e) =>
+        this.team.push(new PositionedCharacter(e, this.getIndex(1)))
+      );
+
+      const teamComp = generateTeam(
+        [Daemon, Undead, Vampire],
+        3,
+        this.team.length
+      );
+      teamComp.forEach((e) =>
+        this.team.push(new PositionedCharacter(e, this.getIndex()))
+      );
+    }
+
+    if (GameState.currentLevel === 4) {
+      const teamUser = generateTeam([Bowman, Swordsman, Magician], 3, 2);
+      teamUser.forEach((e) =>
+        this.team.push(new PositionedCharacter(e, this.getIndex(1)))
+      );
+
+      const teamComp = generateTeam(
+        [Daemon, Undead, Vampire],
+        4,
+        this.team.length
+      );
+      teamComp.forEach((e) =>
+        this.team.push(new PositionedCharacter(e, this.getIndex()))
+      );
+    }
+  }
 }
