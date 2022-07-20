@@ -29,19 +29,17 @@ export default class GameController {
   onCellClick(index) {
     // TODO: react to click
     const char = this.getChar(index);
-    this.currentTeam.team.forEach((el) =>
-      this.gamePlay.deselectCell(el.position)
-    );
+    this.currentTeam.team.forEach((el) => this.gamePlay.deselectCell(el.position));
     // выбор персонажа
     if (this.checkIndex(index) && char.character.player === GameState.player) {
       GameState.char = char;
       GameState.moveArea = this.checkRange(
         char.position,
-        char.character.moveRange
+        char.character.moveRange,
       );
       GameState.attackArea = this.checkRange(
         char.position,
-        char.character.attackRange
+        char.character.attackRange,
       );
       this.gamePlay.selectCell(index);
       GameState.currentIndex = index;
@@ -67,11 +65,11 @@ export default class GameController {
     ) {
       const attacker = GameState.char.character;
       const target = this.currentTeam.team.find(
-        (e) => e.position === index
+        (e) => e.position === index,
       ).character;
       const damage = +Math.max(
         attacker.attack - target.defence,
-        attacker.attack * 0.1
+        attacker.attack * 0.1,
       ).toFixed(2);
       this.gamePlay.showDamage(index, damage).then((responce) => {
         target.health -= damage;
@@ -137,7 +135,7 @@ export default class GameController {
       if (
         GameState.moveArea.includes(index) &&
         !this.currentTeam.team.some(
-          (e) => e.position === GameState.currentIndex
+          (e) => e.position === GameState.currentIndex,
         )
       ) {
         this.gamePlay.selectCell(index, 'green');
@@ -210,7 +208,7 @@ export default class GameController {
     }
     const sortedArray = array.reduce(
       (uniq, item) => (uniq.includes(item) ? uniq : [...uniq, item]),
-      []
+      [],
     );
     sortedArray.splice(sortedArray.indexOf(cur), 1);
     return sortedArray;
@@ -224,11 +222,11 @@ export default class GameController {
     const char = arrayOfChars[Math.floor(Math.random() * arrayOfChars.length)];
     GameState.moveArea = this.checkRange(
       char.position,
-      char.character.moveRange
+      char.character.moveRange,
     );
     GameState.attackArea = this.checkRange(
       char.position,
-      char.character.attackRange
+      char.character.attackRange,
     );
 
     let ind;
@@ -236,7 +234,7 @@ export default class GameController {
     GameState.attackArea.forEach((index) => {
       if (
         this.currentTeam.team.some(
-          (e) => e.position === index && e.character.player !== 'computer'
+          (e) => e.position === index && e.character.player !== 'computer',
         )
       ) {
         ind = index;
@@ -246,11 +244,11 @@ export default class GameController {
     if (ind !== undefined) {
       const attacker = char.character;
       const target = this.currentTeam.team.find(
-        (e) => e.position === ind
+        (e) => e.position === ind,
       ).character;
       const damage = Math.max(
         attacker.attack - target.defence,
-        attacker.attack * 0.1
+        attacker.attack * 0.1,
       );
       this.gamePlay.showDamage(ind, damage).then((responce) => {
         target.health -= damage;
@@ -298,21 +296,21 @@ export default class GameController {
         function () {
           this.outerHTML = this.outerHTML;
         },
-        false
+        false,
       );
       e.addEventListener(
         'mouseleave',
         function () {
           this.outerHTML = this.outerHTML;
         },
-        false
+        false,
       );
       e.addEventListener(
         'click',
         function () {
           this.outerHTML = this.outerHTML;
         },
-        false
+        false,
       );
     });
   }
@@ -358,7 +356,7 @@ export default class GameController {
 
   checkNotPlayer(index) {
     return this.currentTeam.team.some(
-      (e) => e.position === index && e.character.player !== GameState.player
+      (e) => e.position === index && e.character.player !== GameState.player,
     );
   }
 
@@ -377,7 +375,7 @@ export default class GameController {
   deleteCharByIndex(index) {
     this.currentTeam.team.splice(
       this.currentTeam.team.findIndex((e) => e.position === index),
-      1
+      1,
     );
   }
 }

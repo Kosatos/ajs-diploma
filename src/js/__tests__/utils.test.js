@@ -1,6 +1,6 @@
 import { calcTileType } from '../utils';
 
-test(`'calcTileType' should return correct tile type`, () => {
+test('\'calcTileType\' should return correct tile type', () => {
   expect(calcTileType(0, 8)).toBe('top-left');
   expect(calcTileType(7, 8)).toBe('top-right');
   expect(calcTileType(8, 8)).toBe('left');

@@ -16,14 +16,10 @@ export default class Team {
     GameState.currentLevel = 1;
 
     const userTeam = generateTeam([Bowman, Swordsman], 1, 2);
-    userTeam.forEach((el) =>
-      this.team.push(new PositionedCharacter(el, this.getIndex(true)))
-    );
+    userTeam.forEach((el) => this.team.push(new PositionedCharacter(el, this.getIndex(true))));
 
     const computerTeam = generateTeam([Daemon, Undead, Vampire], 1, 2);
-    computerTeam.forEach((el) =>
-      this.team.push(new PositionedCharacter(el, this.getIndex()))
-    );
+    computerTeam.forEach((el) => this.team.push(new PositionedCharacter(el, this.getIndex())));
   }
 
   getIndex(user) {
@@ -47,68 +43,56 @@ export default class Team {
     GameState.currentLevel++;
     this.team.forEach((char) => {
       char.character.level++;
-      char.position = this.getIndex(1);
+      char.position = this.getIndex(true);
 
       const attackAfter = +Math.max(
         char.character.attack,
-        char.character.attack * (1.8 - char.character.health / 100)
+        char.character.attack * (1.8 - char.character.health / 100),
       ).toFixed(2);
       char.character.attack = attackAfter;
 
       char.character.health += 80;
       if (char.character.health > 100) char.character.health = 100;
 
-      if (char.character.player === 'comp') {
+      if (char.character.player === 'computer') {
         this.team.splice(this.team.indexOf(char));
         this.indexArray.splice(this.team.indexOf(char));
       }
     });
     if (GameState.currentLevel === 2) {
-      const teamUser = generateTeam([Bowman, Swordsman, Magician], 1, 1);
-      teamUser.forEach((e) =>
-        this.team.push(new PositionedCharacter(e, this.getIndex(1)))
-      );
+      const userTeam = generateTeam([Bowman, Swordsman, Magician], 1, 1);
+      userTeam.forEach((e) => this.team.push(new PositionedCharacter(e, this.getIndex(true))));
 
-      const teamComp = generateTeam(
+      const computerTeam = generateTeam(
         [Daemon, Undead, Vampire],
         2,
-        this.team.length
+        this.team.length,
       );
-      teamComp.forEach((e) =>
-        this.team.push(new PositionedCharacter(e, this.getIndex()))
-      );
+      computerTeam.forEach((e) => this.team.push(new PositionedCharacter(e, this.getIndex())));
     }
 
     if (GameState.currentLevel === 3) {
-      const teamUser = generateTeam([Bowman, Swordsman, Magician], 2, 2);
-      teamUser.forEach((e) =>
-        this.team.push(new PositionedCharacter(e, this.getIndex(1)))
-      );
+      const userTeam = generateTeam([Bowman, Swordsman, Magician], 2, 2);
+      userTeam.forEach((e) => this.team.push(new PositionedCharacter(e, this.getIndex(true))));
 
-      const teamComp = generateTeam(
+      const computerTeam = generateTeam(
         [Daemon, Undead, Vampire],
         3,
-        this.team.length
+        this.team.length,
       );
-      teamComp.forEach((e) =>
-        this.team.push(new PositionedCharacter(e, this.getIndex()))
-      );
+      computerTeam.forEach((e) => this.team.push(new PositionedCharacter(e, this.getIndex())));
     }
 
     if (GameState.currentLevel === 4) {
-      const teamUser = generateTeam([Bowman, Swordsman, Magician], 3, 2);
-      teamUser.forEach((e) =>
-        this.team.push(new PositionedCharacter(e, this.getIndex(1)))
-      );
+      const userTeam = generateTeam([Bowman, Swordsman, Magician], 3, 2);
+      userTeam.forEach((e) => this.team.push(new PositionedCharacter(e, this.getIndex(true))));
 
-      const teamComp = generateTeam(
+      const computerTeam = generateTeam(
         [Daemon, Undead, Vampire],
         4,
-        this.team.length
+        this.team.length,
       );
-      teamComp.forEach((e) =>
-        this.team.push(new PositionedCharacter(e, this.getIndex()))
-      );
+      computerTeam.forEach((e) => this.team.push(new PositionedCharacter(e, this.getIndex())));
     }
   }
 }
